@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "BullTycoons",
+  "name": "BullTycoons - Your friendly and hostile bulls",
   "icons": [
     {
       "src": "favicon.ico",
