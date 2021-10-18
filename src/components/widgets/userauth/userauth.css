@@ -1,0 +1,15 @@
+
+.balance-btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 3rem;
+}
+
+.user-btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 8rem;
+    border-radius: 10px;
+}

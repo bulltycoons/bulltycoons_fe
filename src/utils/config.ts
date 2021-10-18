@@ -1,0 +1,12 @@
+const {
+    REACT_APP_CHAIN_ID,
+    REACT_APP_PROVIDER_URL
+} = process.env;
+
+const Config = {
+    CHAIN_ID: REACT_APP_CHAIN_ID || 1337,
+    RPC_PROVIDER: REACT_APP_PROVIDER_URL || 'http://localhost:8545',
+    ZERO_ADDRESS: '0x0000000000000000000000000000000000000000'
+}
+
+export default Config;

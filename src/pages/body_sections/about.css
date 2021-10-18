@@ -1,0 +1,12 @@
+button.social {
+    border-radius: 1em;
+    border-color: #000;
+    color: #000;
+    margin: 1em;
+}
+
+button.social:hover {
+    border-color: #1e8faf;
+    background-color: #1e8faf;
+    color: #fff;
+}

@@ -1,0 +1,19 @@
+ul.header_nav {
+    margin-left: auto;
+    display: flex;
+}
+
+ul.header_nav li {
+    list-style: none;
+    margin-left: 2em;
+}
+
+/* ul.header_nav li:hover {
+    color: #015fc8;
+    background-color: #ffffff;
+} */
+
+ul.header_nav li a {
+    color: #ffffff;
+    text-decoration: none;
+}

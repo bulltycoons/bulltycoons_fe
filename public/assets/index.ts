@@ -1,0 +1,1 @@
+export const displayPicture = require('./display_pic.gif');
