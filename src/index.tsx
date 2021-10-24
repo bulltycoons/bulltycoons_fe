@@ -7,16 +7,23 @@ import { UseWalletProvider } from 'use-wallet';
 // import Config from './utils/config';
 import { ContractProvider } from './context/ContractProvider';
 import 'semantic-ui-css/semantic.min.css';
+import { DAppProvider, useEtherBalance, useEthers } from '@usedapp/core'
+import Config from './utils/config';
+import { BrowserRouter as Router } from "react-router-dom";
 
 
 ReactDOM.render(
-  <UseWalletProvider>
-    <ContractProvider>
-      <React.StrictMode>
-          <App />
-      </React.StrictMode>
-    </ContractProvider>
-  </UseWalletProvider>,
+  <React.StrictMode>
+    <DAppProvider config={Config.rpcConfig}>
+      <UseWalletProvider>
+        <ContractProvider>
+            <Router>
+              <App />
+            </Router>
+        </ContractProvider>
+      </UseWalletProvider>
+    </DAppProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

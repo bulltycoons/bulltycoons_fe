@@ -4,8 +4,9 @@ import { Button, Icon, Image } from 'semantic-ui-react';
 import './main.css';
 import { useMediaQuery } from "react-responsive";
 
+
 const Header = ({ ...otherProps}) => {
-    
+
     const [ menuVisible, setMenuVisible ] = useState(false);
     const toggleMenu = () => {
         setMenuVisible(menuVisible ? false : true);
