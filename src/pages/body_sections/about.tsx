@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Button, Icon, Image } from 'semantic-ui-react';
 import './about.css';
@@ -18,19 +17,19 @@ const AboutSection = () => {
                     <p style={{textAlign:'justify', fontSize:'1.3rem'}}>
                         <span style={{marginBottom:'0.5em'}}>Join our community</span>
                         <br />
-                        <a href="https://instagram.com/bulltycoons" target="_blank" >
+                        <a href="https://instagram.com/bulltycoons" target="_blank" rel="noreferrer">
                             <Button color='instagram' className="socials">
                                 <Icon name="instagram" />
                                 Instragram
                             </Button>
                         </a>
-                        <a href="https://twitter.com/bulltycoons" target="_blank" >
+                        <a href="https://twitter.com/bulltycoons" target="_blank" rel="noreferrer">
                             <Button color='twitter' className="socials">
                                 <Icon name="twitter" />
                                 Twitter
                             </Button>
                         </a>
-                        <a href="https://t.me/bulltycoons" target="_blank" >
+                        <a href="https://t.me/bulltycoons" target="_blank" rel="noreferrer">
                             <Button color='facebook' className="socials">
                                 <Icon name="telegram" />
                                 Telegram

@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { useWallet } from 'use-wallet';
+import { useState } from 'react';
+// import { useWallet } from 'use-wallet';
 import BullModal from '../modal';
 import './userauth.css';
 import { Button } from 'semantic-ui-react';
 import { ethers } from 'ethers';
-import Config from '../../../utils/config';
-import { displayErrorMessage } from '../../../utils/utility';
-import Logger from '../../../utils/logger';
 import { useEthers, useEtherBalance } from '@usedapp/core';
 
 const UserAuth = ({ connectText="Connect" }: any) => {
 
-    const { /* account, connect, */ reset, status, error, balance } = useWallet();
+    // const { /* account, connect, */ reset, status, error, balance } = useWallet();
     const [ openModal, setOpenModal ] = useState(false);
     // const [ openConnectModal, setOpenConnectModal ] = useState(false);
 

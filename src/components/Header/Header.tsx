@@ -1,16 +1,15 @@
-import React, { useState } from "react";
 import UserAuth from "../widgets/userauth";
-import { Button, Icon, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 import './main.css';
 import { useMediaQuery } from "react-responsive";
 
 
 const Header = ({ ...otherProps}) => {
 
-    const [ menuVisible, setMenuVisible ] = useState(false);
-    const toggleMenu = () => {
+    /* const [ menuVisible, setMenuVisible ] = useState(false);
+     const toggleMenu = () => {
         setMenuVisible(menuVisible ? false : true);
-    }
+    } */
      
     return (
         <div className="container" style={{background:'#000', padding:'1em'}} {...otherProps}>

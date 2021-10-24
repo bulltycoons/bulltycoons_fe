@@ -1,18 +1,15 @@
-import { useMediaQuery } from 'react-responsive';
-import { Button, Icon } from 'semantic-ui-react';
-import UserAuth from '../components/widgets/userauth';
-import { useEthers, useContractFunction, useContractCall } from '@usedapp/core';
-import { useContract } from '../hooks/useContract';
-import { BullTycoonsContractABI, BullTycoonsContractAddress, BullTycoonsFactoryContractABI, BullTycoonsFactoryContractAddress, WethABI, WethAddress } from '../utils/contracts';
+import { Button } from 'semantic-ui-react';
+import { useContractFunction, useContractCall } from '@usedapp/core';
+import { BullTycoonsFactoryContractABI, BullTycoonsFactoryContractAddress } from '../utils/contracts';
 import { Contract } from '@ethersproject/contracts';
 import { Interface } from '@ethersproject/abi/lib/interface';
-import { BigNumber, ethers, utils } from 'ethers';
+import { utils } from 'ethers';
 import { useEffect, useState } from 'react';
 import Logger from '../utils/logger';
 import { displayErrorMessage } from '../utils/utility';
 import Header from '../components/Header/Header';
 
-const Admin = ({ }) => {
+const Admin = () => {
 
     const [ isLoading, setIsLoading ] = useState(false);
 
