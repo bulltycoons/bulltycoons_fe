@@ -1,7 +1,7 @@
-import React from "react";
 import { useMediaQuery } from "react-responsive";
-import { Button, Icon } from "semantic-ui-react";
+import {  Icon } from "semantic-ui-react";
 import { BULLTYCOON_ADDRESS } from "../context/ContractProvider";
+import Config from "../utils/config";
 
 const Footer = () => {
     return (
@@ -14,7 +14,7 @@ const Footer = () => {
                         <a href="#mint" style={{color:'#fff'}}><Icon name="hashtag" /> Mint</a><br/>
                         <a href="#roadmap" style={{color:'#fff'}}><Icon name="hashtag" /> Roadmap</a><br/>
                         <a href="#team" style={{color:'#fff'}}><Icon name="hashtag" /> Team</a><br/>
-                        <a style={{color:'#fff'}} href={`${process.env.REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL}/contract/${BULLTYCOON_ADDRESS}`} target="_blank" rel="noreferrer noopener"><Icon name="external" /> Smart Contract</a><br/>
+                        <a style={{color:'#fff'}} href={`${Config.BLOCKCHAIN_EXPLORER_BASE_URL}/${BULLTYCOON_ADDRESS}`} target="_blank" rel="noreferrer noopener"><Icon name="external" /> Smart Contract</a><br/>
                     </div>
                 </div>
                 <div style={{flex:1, justifyContent:'right', padding:'1em'}}>

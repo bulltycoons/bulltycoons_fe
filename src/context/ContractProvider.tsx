@@ -1,9 +1,8 @@
 import { ethers } from 'ethers';
-import React, {createContext, useEffect, useState, SetStateAction, Dispatch} from 'react';
+import {createContext, useEffect, useState, SetStateAction, Dispatch} from 'react';
 import useWallet from 'use-wallet';
 import Config from '../utils/config';
 import Logger from '../utils/logger';
-import { displayErrorMessage } from '../utils/utility';
 
 const BullTycoonFactoryContractInterface = require('../utils/contracts/BullTycoonsFactoryMock.json');
 const BullTycoonContractInterface = require('../utils/contracts/BullTycoons.json');

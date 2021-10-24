@@ -7,7 +7,7 @@ import { UseWalletProvider } from 'use-wallet';
 // import Config from './utils/config';
 import { ContractProvider } from './context/ContractProvider';
 import 'semantic-ui-css/semantic.min.css';
-import { DAppProvider, useEtherBalance, useEthers } from '@usedapp/core'
+import { DAppProvider } from '@usedapp/core'
 import Config from './utils/config';
 import { BrowserRouter as Router } from "react-router-dom";
 

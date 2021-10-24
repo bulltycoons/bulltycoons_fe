@@ -4,7 +4,9 @@ const {
     REACT_APP_CHAIN_ID,
     REACT_APP_PROVIDER_URL,
     REACT_APP_PROVIDER_ID,
-    REACT_APP_ENV_BASE
+    REACT_APP_ENV_BASE,
+    REACT_APP_OPENSEA_URL,
+    REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL
 } = process.env;
 
 const devConfig:DapConfig = {
@@ -28,12 +30,14 @@ const mainnetConfig: DapConfig = {
     }
 }
 
-const rpcConfig = (REACT_APP_ENV_BASE == 'development') ? devConfig : (REACT_APP_ENV_BASE == 'testnet') ? testnetConfig : mainnetConfig
+const rpcConfig = (REACT_APP_ENV_BASE === 'development') ? devConfig : (REACT_APP_ENV_BASE === 'testnet') ? testnetConfig : mainnetConfig
 
 const Config = {
     CHAIN_ID: REACT_APP_CHAIN_ID || 1337,
     RPC_PROVIDER: REACT_APP_PROVIDER_URL || 'http://localhost:8545',
     ZERO_ADDRESS: '0x0000000000000000000000000000000000000000',
+    OPENSEA_URL: REACT_APP_OPENSEA_URL,
+    BLOCKCHAIN_EXPLORER_BASE_URL: REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL,
     devConfig,
     testnetConfig,
     mainnetConfig,
