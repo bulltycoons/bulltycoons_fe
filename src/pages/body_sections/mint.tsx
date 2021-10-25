@@ -111,6 +111,7 @@ const MintSection = () => {
                         <a href="https://instagram.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="instagram" style={{color:'#ffffff'}} size="big" /></a>
                         <a href="https://twitter.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="twitter" style={{color:'#ffffff'}} size="big" /></a>
                         <a href="https://t.me/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="telegram" style={{color:'#ffffff'}} size="big" /></a>
+                        <a href="https://discord.gg/sTXnEBXzGe" target="_blank" rel="noreferrer noopener"><Icon name="discord" style={{color:'#ffffff'}} size="big" /></a>
                     </div>
                 )}
             </div>

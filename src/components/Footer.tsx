@@ -23,6 +23,7 @@ const Footer = () => {
                         <a href="https://twitter.com/bulltycoons" style={{color:'#fff'}} target="_blank" rel="noreferrer noopener"><Icon name="twitter" /> Twitter</a><br/>
                         <a href="https://instagram.com/bulltycoons" style={{color:'#fff'}} target="_blank" rel="noreferrer noopener"><Icon name="instagram" /> Instagram</a><br/>
                         <a href="https://t.me/bulltycoons" style={{color:'#fff'}} target="_blank" rel="noreferrer noopener"><Icon name="telegram" /> Telegram</a><br/>
+                        <a href="https://discord.gg/sTXnEBXzGe" style={{color:'#fff'}} target="_blank" rel="noreferrer noopener"><Icon name="discord" /> Discord</a><br/>
                     </div>
                 </div>
                 {!useMediaQuery({maxWidth:600}) && (<div style={{flex:1}}></div>)}

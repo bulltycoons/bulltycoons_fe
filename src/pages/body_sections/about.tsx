@@ -35,6 +35,12 @@ const AboutSection = () => {
                                 Telegram
                             </Button>
                         </a>
+                        <a href="https://discord.gg/sTXnEBXzGe" target="_blank" rel="noreferrer">
+                            <Button color='linkedin' className="socials">
+                                <Icon name="discord" />
+                                Discord
+                            </Button>
+                        </a>
                     </p>
                 </div>
                 {useMediaQuery({maxWidth:600}) && (<div style={{width:'100%', height:'1px', background:'#ffffff88', marginTop:'1.5em', marginBottom:'1.5em'}} />)}
