@@ -1,3 +1,5 @@
+import { Contract } from '@ethersproject/contracts';
+import { utils } from 'ethers';
 import Config from '../config';
 
 const BullTycoonFactoryContractInterface = require('./BullTycoonsFactoryMock.json');
@@ -15,3 +17,6 @@ export const BullTycoonsFactoryContractAddress = BullTycoonFactoryContractInterf
 export const WethABI = WethInterface.abi;
 export const WethAddress = WethInterface.networks[chaindId].address;
 
+export const BullTycoonsContract = new Contract(BullTycoonsContractAddress, new utils.Interface(BullTycoonsContractABI));
+export const BullTycoonsFactoryContract = new Contract(BullTycoonsFactoryContractAddress, new utils.Interface(BullTycoonsFactoryContractABI));
+export const WethContract = new Contract(WethAddress, new utils.Interface(WethABI));
