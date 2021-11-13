@@ -1,7 +1,6 @@
 import { Button } from 'semantic-ui-react';
 import { useContractFunction, useContractCall } from '@usedapp/core';
-import { BullTycoonsFactoryContractABI, BullTycoonsFactoryContractAddress } from '../utils/contracts';
-import { Contract } from '@ethersproject/contracts';
+import { BullTycoonsContract, BullTycoonsFactoryContract, BullTycoonsFactoryContractABI, BullTycoonsFactoryContractAddress } from '../utils/contracts';
 import { Interface } from '@ethersproject/abi/lib/interface';
 import { utils } from 'ethers';
 import { useEffect, useState } from 'react';
@@ -12,9 +11,16 @@ import Header from '../components/Header/Header';
 const Admin = () => {
 
     const [ isLoading, setIsLoading ] = useState(false);
+    const [ isTransferLoading, setIsTransferLoading ] = useState(false);
+    const [ maxIsLoading, setMaxIsLoading ] = useState(false);
+    const [ transferAddress, setTransferAddress ] = useState<string>();
+    const [ fromAddress, setFromAddress ] = useState("address");
+    const [ maxMintNumber, setMaxMintNumber ] = useState<number>();
 
-    const bullTycoonsFactoryContract = new Contract(BullTycoonsFactoryContractAddress, new utils.Interface(BullTycoonsFactoryContractABI))
-    const startMinting = useContractFunction(bullTycoonsFactoryContract, 'setStartMinting', { transactionName:'setStartMinting' });
+    const startMinting = useContractFunction(BullTycoonsFactoryContract, 'setStartMinting', { transactionName:'setStartMinting' });
+    const transferNFTFactory = useContractFunction(BullTycoonsContract, 'transferOwnership', { transactionName:'transferOwnership' });
+    const transferNFTFactoryFromFactory = useContractFunction(BullTycoonsFactoryContract, 'transferNFTAdminRole', { transactionName:'transferNFTAdminRole' });
+    const setMaxMintPerPerson = useContractFunction(BullTycoonsFactoryContract, 'setMaxMintPerPerson', { transactionName:'setMaxMintPerPerson' });
     const isMintStarted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START', args:[]});
     Logger.log(isMintStarted ? isMintStarted[0] : isMintStarted, "<== Mint Started?");
     
@@ -23,14 +29,48 @@ const Admin = () => {
         startMinting.send(start);
     }
 
+    const transferOwnership = () => {
+        if (!transferAddress || !utils.isAddress(transferAddress)) return displayErrorMessage({message: "Invalid address"});
+        setIsTransferLoading(true);
+        if (fromAddress == "address") {
+            Logger.log("Running from address");
+            transferNFTFactory.send(transferAddress);
+        } else {
+            Logger.log("Running from factory");
+            transferNFTFactoryFromFactory.send(transferAddress);
+        }
+    }
+
+    const setMaxMintPerAccount = () => {
+        if (!maxMintNumber || Number(maxMintNumber) == 0) return;
+        setMaxIsLoading(true);
+        setMaxMintPerPerson.send(maxMintNumber);
+    }
+
     useEffect(() => {
         if (startMinting.state.status !== 'Mining') {
             setIsLoading(false);
         }
         Logger.log(startMinting.state.status, "<== Status");
-        // Logger.log(JSON.stringify(startMinting.state.errorMessage), "<== Error Message");
         if (startMinting.state.errorMessage) displayErrorMessage({message: startMinting.state.errorMessage});
     }, [startMinting.state]);
+
+    useEffect(() => {
+        if (transferNFTFactory.state.status !== 'Mining' && transferNFTFactoryFromFactory.state.status !== 'Mining') {
+            setIsTransferLoading(false);
+        }
+        Logger.log(transferNFTFactory.state.status, transferNFTFactoryFromFactory.state.status, "<== Transfer Factory Status");
+        if (transferNFTFactory.state.errorMessage || transferNFTFactoryFromFactory.state.errorMessage) displayErrorMessage({message: (transferNFTFactory.state.errorMessage || transferNFTFactoryFromFactory.state.errorMessage)});
+    }, [transferNFTFactory.state, transferNFTFactoryFromFactory.state]);
+
+    useEffect(() => {
+        if (setMaxMintPerPerson.state.status !== 'Mining') {
+            setMaxIsLoading(false);
+            setMaxMintNumber(undefined);
+        }
+        Logger.log(setMaxMintPerPerson.state.status, "<== Status");
+        if (setMaxMintPerPerson.state.errorMessage) displayErrorMessage({message: setMaxMintPerPerson.state.errorMessage});
+    }, [setMaxMintPerPerson.state]);
 
     return (
         <div>
@@ -41,6 +81,38 @@ const Admin = () => {
                 ) : (
                     <Button size="big" color="red" loading={isLoading} onClick={() => startMintingProcess(false)}>Stop Minting Process</Button>
                 )}
+                <hr />
+                <section style={{padding:'2em'}}>
+                    <h2>Transfer Ownership of Contract</h2>
+                    <div style={{display:'flex', flexDirection:'row'}}>
+                        <input type="text" onChange={e => {
+                            Logger.log(e.target.value);
+                            setTransferAddress(e.target.value);
+                        }} defaultValue={transferAddress} style={{flex:2}} />
+                        <div>
+                            <select onChange={e => {
+                                setFromAddress(e.target.value);
+                            }}>
+                                <option value="address">From Address</option>
+                                <option value="factory">From Factory</option>
+                            </select>
+                        </div>
+                        <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={isTransferLoading} onClick={() => transferOwnership()}>Transfer Ownership</Button>
+                    </div>
+                </section>
+                <hr />
+                <section style={{padding:'2em'}}>
+                    <h2>Set Maximum Mint per Person</h2>
+                    <div style={{display:'flex', flexDirection:'row'}}>
+                        <input value={maxMintNumber} type="text" onChange={e => {
+                            Logger.log(e.target.value);
+                            setMaxMintNumber(Number(e.target.value));
+                        }} style={{flex:2}} />
+                        <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={maxIsLoading} onClick={() => setMaxMintPerAccount()}>Set Max</Button>
+                    </div>
+                
+                </section>
+                <hr />
             </div>
         </div>
     )
