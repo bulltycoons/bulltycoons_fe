@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Logger from '../utils/logger';
 import { displayErrorMessage } from '../utils/utility';
 import Header from '../components/Header/Header';
+import moment from 'moment';
 
 const Admin = () => {
 
@@ -18,18 +19,24 @@ const Admin = () => {
     const [ maxMintNumber, setMaxMintNumber ] = useState<number>();
     const [ maxSupply, setMaxSupplyNo ] = useState<number>();
     const [ isMaxSupplyLoading, setIsMaxSupplyLoading ] = useState(false);
+    const [ mintDate, setMintStartDate ] = useState<string>();
 
-    const startMinting = useContractFunction(BullTycoonsFactoryContract, 'setStartMinting', { transactionName:'setStartMinting' });
+    const setStartMintDate = useContractFunction(BullTycoonsFactoryContract, 'setMintStartDate', { transactionName:'setMintStartDate' });
     const transferNFTFactory = useContractFunction(BullTycoonsContract, 'transferOwnership', { transactionName:'transferOwnership' });
     const transferNFTFactoryFromFactory = useContractFunction(BullTycoonsFactoryContract, 'transferNFTAdminRole', { transactionName:'transferNFTAdminRole' });
     const setMaxMintPerPerson = useContractFunction(BullTycoonsFactoryContract, 'setMaxMintPerPerson', { transactionName:'setMaxMintPerPerson' });
     const setMaxSupply = useContractFunction(BullTycoonsFactoryContract, 'setMaxSupply', { transactionName:'setMaxSupply' });
-    const isMintStarted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START', args:[]});
-    Logger.log(isMintStarted ? isMintStarted[0] : isMintStarted, "<== Mint Started?");
     
-    const startMintingProcess = (start:boolean) => {
+    // const isMintStarted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START', args:[]});const mintStartDate = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START_DATE', args:[]});
+    // const mintStartDate = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START_DATE', args:[]});
+
+    // Logger.log(isMintStarted ? isMintStarted[0] : isMintStarted, "<== Mint Started?");
+    
+    const setMintingDate = () => {
+        // Logger.log(mintDate, mintDate ? !isNaN(new Date(mintDate).getTime()) : 'No Date', "<== MintDate");
+        if (!mintDate || isNaN(new Date(mintDate).getTime())) return displayErrorMessage({ message: "Invalid date inserted!" });
         setIsLoading(true);
-        startMinting.send(start);
+        setStartMintDate.send((new Date(mintDate).getTime())/1000);
     }
 
     const transferOwnership = () => {
@@ -56,12 +63,12 @@ const Admin = () => {
     }
 
     useEffect(() => {
-        if (startMinting.state.status !== 'Mining') {
+        if (setStartMintDate.state.status !== 'Mining') {
             setIsLoading(false);
         }
-        Logger.log(startMinting.state.status, "<== Status");
-        if (startMinting.state.errorMessage) displayErrorMessage({message: startMinting.state.errorMessage});
-    }, [startMinting.state]);
+        Logger.log(setStartMintDate.state.status, "<== Status");
+        if (setStartMintDate.state.errorMessage) displayErrorMessage({message: setStartMintDate.state.errorMessage});
+    }, [setStartMintDate.state]);
 
     useEffect(() => {
         if (transferNFTFactory.state.status !== 'Mining' && transferNFTFactoryFromFactory.state.status !== 'Mining') {
@@ -91,17 +98,27 @@ const Admin = () => {
         <div>
             <Header id="header" />
             <div style={{padding:'2em'}}>
-                {(isMintStarted && !isMintStarted[0]) ? (
+                {/* {(isMintStarted && !isMintStarted[0]) ? (
                     <Button size="big" color="green" loading={isLoading} onClick={() => startMintingProcess(true)}>Start Minting Process</Button>
                 ) : (
                     <Button size="big" color="red" loading={isLoading} onClick={() => startMintingProcess(false)}>Stop Minting Process</Button>
-                )}
+                )} */}
+                <section style={{padding:'2em'}}>
+                    <h2>Set Start Mint Date</h2>
+                    <div style={{display:'flex', flexDirection:'row'}}>
+                        <input value={mintDate} type="text" onChange={e => {
+                            // Logger.log(e.target.value);
+                            setMintStartDate(e.target.value);
+                        }} style={{flex:2}} />
+                        <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={isLoading} onClick={() => setMintingDate()}>Set Mint Date</Button>
+                    </div>
+                </section>
                 <hr />
                 <section style={{padding:'2em'}}>
                     <h2>Transfer Ownership of Contract</h2>
                     <div style={{display:'flex', flexDirection:'row'}}>
                         <input type="text" onChange={e => {
-                            Logger.log(e.target.value);
+                            // Logger.log(e.target.value);
                             setTransferAddress(e.target.value);
                         }} defaultValue={transferAddress} style={{flex:2}} />
                         <div>
@@ -120,7 +137,7 @@ const Admin = () => {
                     <h2>Set Maximum Mint per Person</h2>
                     <div style={{display:'flex', flexDirection:'row'}}>
                         <input value={maxMintNumber} type="text" onChange={e => {
-                            Logger.log(e.target.value);
+                            // Logger.log(e.target.value);
                             setMaxMintNumber(Number(e.target.value));
                         }} style={{flex:2}} />
                         <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={maxIsLoading} onClick={() => setMaxMintPerAccount()}>Set Max</Button>
@@ -132,7 +149,7 @@ const Admin = () => {
                     <h2>Set Total Mint Supply</h2>
                     <div style={{display:'flex', flexDirection:'row'}}>
                         <input value={maxSupply} type="text" onChange={e => {
-                            Logger.log(e.target.value);
+                            // Logger.log(e.target.value);
                             setMaxSupplyNo(Number(e.target.value));
                         }} style={{flex:2}} />
                         <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={isMaxSupplyLoading} onClick={() => setMaximumSupply()}>Set Max Supply</Button>

@@ -14,6 +14,7 @@ toast.configure({
   closeOnClick: true,
   pauseOnHover: true,
   draggable: false,
+  style: { marginTop: '5em', zIndex: 9999999 }
 })
 
 const App = () => {

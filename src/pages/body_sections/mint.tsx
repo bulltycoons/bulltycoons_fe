@@ -5,18 +5,13 @@ import UserAuth from '../../components/widgets/userauth';
 import { useEthers, useContractFunction, useContractCall } from '@usedapp/core';
 import { BullTycoonsContractABI, BullTycoonsContractAddress, BullTycoonsFactoryContract, BullTycoonsFactoryContractABI, BullTycoonsFactoryContractAddress, WethABI, WethAddress, WethContract } from '../../utils/contracts';
 import { Interface } from '@ethersproject/abi/lib/interface';
-import {  ethers, utils } from 'ethers';
+import {  BigNumber, ethers, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 import Logger from '../../utils/logger';
 import { displayErrorMessage } from '../../utils/utility';
 import Config from '../../utils/config';
 import Slider from 'react-input-slider';
 import moment from 'moment';
-
-const startDate = moment(new Date(Config.START_DATE));
-// const startDate = moment(new Date("11-12-2021 16:10:00+01:00"));
-const isStarted = moment().isAfter(startDate);
-// Logger.log(isStarted, startDate.toString(), "<== Date Fns");
 
 interface MintBtnProps {
     mintCost: string;
@@ -85,12 +80,15 @@ const MintSection = () => {
     const [ totalMints, setTotalMints ] = useState(0);
     const [ mintable, setMintable ] = useState(0);
     const [ isLoadingMintSection, setIsLoadingMintSection ] = useState(true);
+    const [ isStarted, setIsStarted ] = useState(false);
+    const [ startDate, setStartDate ] = useState("");
 
     const minted = useContractCall({abi: new Interface(BullTycoonsContractABI), address:BullTycoonsContractAddress, method:'totalSupply', args:[]});
     Logger.log(minted ? Number(minted[0]) : minted, "<== Minted");
 
-    const isMintStarted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START', args:[]});
-    Logger.log(isMintStarted ? isMintStarted[0] : isMintStarted, "<== Mint Started?");
+    const mintStartDate = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START_DATE', args:[]});
+    // MINT_START_DATE
+    Logger.log(mintStartDate ? mintStartDate[0] : mintStartDate, "<== Mint Start Date?");
 
     const numberMinted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'getNumberMinted', args:[account]});
     const mintPerPerson = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_PER_PERSON', args:[]});
@@ -106,6 +104,18 @@ const MintSection = () => {
     useEffect(() => {
         setIsLoadingMintSection(false);
     }, []);
+
+    useEffect(() => {
+        if (mintStartDate && mintStartDate[0]) {
+            const dateFromContract = BigNumber.from(mintStartDate[0]).toNumber() * 1000;
+            // Logger.log(dateFromContract, "<== Date from contract");
+            const date = moment(new Date(dateFromContract));
+            const isStart = moment().isAfter(date);
+            Logger.log(isStart, "<== Date Formatted");
+            setIsStarted(isStart);
+            setStartDate(date.format('llll'));
+        }
+    }, [mintStartDate]);
 
     return (
         <section id="mint" style={{padding:'5%', background:'#000', color:'#ffffff'}}>
@@ -130,7 +140,7 @@ const MintSection = () => {
                     </div>
                 ) : (
                     <>
-                        {(isStarted && isMintStarted && isMintStarted[0]) && (
+                        {(isStarted) && (
                             <div style={{flex:1}}>
                                 <h3>Already Minted ({minted ? Number(minted[0]) : '-'}/{maxSupply ? Number(maxSupply[0]) : '-'})</h3>
                                 <hr />
@@ -177,7 +187,7 @@ const MintSection = () => {
                         {!isStarted && ( 
                             <div style={{flex:1}}>
                                 <h2>Mint Starts:</h2>
-                                <h3>{startDate.format('llll')}</h3>
+                                <h3>{startDate}</h3>
                                 <p>Join our social media channels to get reminded</p>
                                 <a href="https://instagram.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="instagram" style={{color:'#ffffff'}} size="big" /></a>
                                 <a href="https://twitter.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="twitter" style={{color:'#ffffff'}} size="big" /></a>
