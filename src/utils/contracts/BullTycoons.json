@@ -27087,11 +27087,43 @@
           ],
           "name": "Transfer",
           "type": "event"
+        },
+        "0x9ad48bf375c2916ebcf58df5438771990ce83cb6bbc6838c35c1be5585753100": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            }
+          ],
+          "name": "BridgeBurn",
+          "type": "event"
+        },
+        "0x397b33b307fc137878ebfc75b295289ec0ee25a31bb5bf034f33256fe8ea2aa6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "_address",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            }
+          ],
+          "name": "BridgeMint",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x1FE624077F9d068Fd15Ee08467dD13c6fB073521",
-      "transactionHash": "0x273739b8f2bf4207aa306daa3c01cc6ef4c82489e953f451764597e2401a715b"
+      "address": "0x9a7ba4e7C96430aFaE5f6C1621778f6cbE947557",
+      "transactionHash": "0x507438880272ec1bf8cd3228336e650c7d874431b2f9b579058acc59530e6bc9"
     },
     "80001": {
       "events": {
@@ -27253,7 +27285,7 @@
     }
   },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-11-12T22:45:58.210Z",
+  "updatedAt": "2021-11-18T05:03:49.188Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

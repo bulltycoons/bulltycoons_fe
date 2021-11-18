@@ -11,8 +11,6 @@ const {
     REACT_APP_START_DATE
 } = process.env;
 
-assert(REACT_APP_START_DATE, "REACT_APP_START_DATE is required");
-
 const devConfig:DapConfig = {
     readOnlyChainId: ChainId.Localhost,
     /* readOnlyUrls:{
@@ -45,8 +43,7 @@ const Config = {
     devConfig,
     testnetConfig,
     mainnetConfig,
-    rpcConfig,
-    START_DATE: REACT_APP_START_DATE || ""
+    rpcConfig
 }
 
 export default Config;
