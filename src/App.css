@@ -2,15 +2,22 @@
   text-align: center;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding: 4em 0 0 0;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-/* #header {
+#header {
   position: sticky;
   position: -webkit-sticky;
-} */
+  top:0;
+  z-index: 99999;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

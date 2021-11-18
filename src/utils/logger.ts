@@ -1,5 +1,4 @@
-const isDevelopment = process.env.REACT_APP_IS_DEVELOPMENT || true;
-
+const isDevelopment = process.env.REACT_APP_IS_DEVELOPMENT ? process.env.REACT_APP_IS_DEVELOPMENT == 'true' : true;
 const log = (...args: any[]) => {
     if (isDevelopment) {
         console.log(...args);

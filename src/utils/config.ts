@@ -1,4 +1,5 @@
 import { ChainId, Config as DapConfig } from "@usedapp/core";
+import assert from "assert";
 
 const {
     REACT_APP_CHAIN_ID,
@@ -6,8 +7,11 @@ const {
     REACT_APP_PROVIDER_ID,
     REACT_APP_ENV_BASE,
     REACT_APP_OPENSEA_URL,
-    REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL
+    REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL,
+    REACT_APP_START_DATE
 } = process.env;
+
+assert(REACT_APP_START_DATE, "REACT_APP_START_DATE is required");
 
 const devConfig:DapConfig = {
     readOnlyChainId: ChainId.Localhost,
@@ -41,7 +45,8 @@ const Config = {
     devConfig,
     testnetConfig,
     mainnetConfig,
-    rpcConfig
+    rpcConfig,
+    START_DATE: REACT_APP_START_DATE || ""
 }
 
 export default Config;
