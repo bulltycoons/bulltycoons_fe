@@ -17,30 +17,12 @@ const AboutSection = () => {
                     <p style={{textAlign:'justify', fontSize:'1.3rem'}}>
                         <span style={{marginBottom:'0.5em'}}>Join our community</span>
                         <br />
-                        <a href="https://instagram.com/bulltycoons" target="_blank" rel="noreferrer">
-                            <Button color='instagram' className="socials">
-                                <Icon name="instagram" />
-                                Instragram
-                            </Button>
-                        </a>
-                        <a href="https://twitter.com/bulltycoons" target="_blank" rel="noreferrer">
-                            <Button color='twitter' className="socials">
-                                <Icon name="twitter" />
-                                Twitter
-                            </Button>
-                        </a>
-                        <a href="https://t.me/bulltycoons" target="_blank" rel="noreferrer">
-                            <Button color='facebook' className="socials">
-                                <Icon name="telegram" />
-                                Telegram
-                            </Button>
-                        </a>
-                        <a href="https://discord.gg/sTXnEBXzGe" target="_blank" rel="noreferrer">
-                            <Button color='linkedin' className="socials">
-                                <Icon name="discord" />
-                                Discord
-                            </Button>
-                        </a>
+                        <div style={{marginTop:'1em', marginBottom:'1em'}}>
+                            <a href="https://instagram.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="instagram"color='black' size="big" /></a>
+                            <a href="https://twitter.com/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="twitter" color='black' size="big" /></a>
+                            <a href="https://t.me/bulltycoons" target="_blank" rel="noreferrer noopener"><Icon name="telegram" color='black' size="big" /></a>
+                            <a href="https://discord.gg/sTXnEBXzGe" target="_blank" rel="noreferrer noopener"><Icon name="discord" color='black' size="big" /></a>
+                        </div>
                     </p>
                 </div>
                 {useMediaQuery({maxWidth:600}) && (<div style={{width:'100%', height:'1px', background:'#ffffff88', marginTop:'1.5em', marginBottom:'1.5em'}} />)}

@@ -16,11 +16,14 @@ const Admin = () => {
     const [ transferAddress, setTransferAddress ] = useState<string>();
     const [ fromAddress, setFromAddress ] = useState("address");
     const [ maxMintNumber, setMaxMintNumber ] = useState<number>();
+    const [ maxSupply, setMaxSupplyNo ] = useState<number>();
+    const [ isMaxSupplyLoading, setIsMaxSupplyLoading ] = useState(false);
 
     const startMinting = useContractFunction(BullTycoonsFactoryContract, 'setStartMinting', { transactionName:'setStartMinting' });
     const transferNFTFactory = useContractFunction(BullTycoonsContract, 'transferOwnership', { transactionName:'transferOwnership' });
     const transferNFTFactoryFromFactory = useContractFunction(BullTycoonsFactoryContract, 'transferNFTAdminRole', { transactionName:'transferNFTAdminRole' });
     const setMaxMintPerPerson = useContractFunction(BullTycoonsFactoryContract, 'setMaxMintPerPerson', { transactionName:'setMaxMintPerPerson' });
+    const setMaxSupply = useContractFunction(BullTycoonsFactoryContract, 'setMaxSupply', { transactionName:'setMaxSupply' });
     const isMintStarted = useContractCall({abi: new Interface(BullTycoonsFactoryContractABI), address:BullTycoonsFactoryContractAddress, method:'MINT_START', args:[]});
     Logger.log(isMintStarted ? isMintStarted[0] : isMintStarted, "<== Mint Started?");
     
@@ -47,6 +50,11 @@ const Admin = () => {
         setMaxMintPerPerson.send(maxMintNumber);
     }
 
+    const setMaximumSupply = () => {
+        if (!maxSupply || Number(maxSupply) == 0) return;
+        setMaxSupply.send(maxSupply);
+    }
+
     useEffect(() => {
         if (startMinting.state.status !== 'Mining') {
             setIsLoading(false);
@@ -71,6 +79,13 @@ const Admin = () => {
         Logger.log(setMaxMintPerPerson.state.status, "<== Status");
         if (setMaxMintPerPerson.state.errorMessage) displayErrorMessage({message: setMaxMintPerPerson.state.errorMessage});
     }, [setMaxMintPerPerson.state]);
+
+    useEffect(() => {
+        if (setMaxSupply.state.status !== 'Mining') {
+            setIsMaxSupplyLoading(false);
+            setMaxSupplyNo(undefined);
+        }
+    }, [setMaxSupply.state]);
 
     return (
         <div>
@@ -113,6 +128,17 @@ const Admin = () => {
                 
                 </section>
                 <hr />
+                <section style={{padding:'2em'}}>
+                    <h2>Set Total Mint Supply</h2>
+                    <div style={{display:'flex', flexDirection:'row'}}>
+                        <input value={maxSupply} type="text" onChange={e => {
+                            Logger.log(e.target.value);
+                            setMaxSupplyNo(Number(e.target.value));
+                        }} style={{flex:2}} />
+                        <Button size="big" style={{flex:1, marginLeft: '1em'}} color="red" loading={isMaxSupplyLoading} onClick={() => setMaximumSupply()}>Set Max Supply</Button>
+                    </div>
+                
+                </section>
             </div>
         </div>
     )
