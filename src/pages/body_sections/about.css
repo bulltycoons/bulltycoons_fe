@@ -10,3 +10,33 @@ button.social:hover {
     background-color: #1e8faf;
     color: #fff;
 }
+
+#img_display {
+    animation: nft_flip 1s ease-in;
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+}
+
+#img_display:hover {
+    transform: scale(1.2, 1.2);
+    /* animation: zoom_in 1s ease; */
+}
+
+@keyframes nft_flip {
+    0%{
+        transform: translateX(150%)
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+@keyframes zoom_in {
+    0%{
+        transform: scale(1,1);
+    }
+    100%{
+        transform: scale(1.2, 1.2);
+    }
+}

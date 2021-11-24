@@ -69,9 +69,9 @@ const roadMapContent = [
 const RoadmapSection = () => {
 
     return (
-        <section id="roadmap" style={{padding:'5%', background:'#ffffff'}}>
+        <section id="roadmap" style={{padding:'5%', background:'#0004'}}>
             <div style={{marginBottom:'1em', textAlign:'center'}}>
-                <h1 style={{color:"#3f3f3f"}}>Roadmap</h1>
+                <h1 style={{color:"#fff"}}>Roadmap</h1>
             </div>
             <div style={{padding:'1em'}}>
                 <Card.Group /* itemsPerRow={2} */ flex>

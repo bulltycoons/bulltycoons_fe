@@ -26,9 +26,9 @@ const CardItem = ({ image, name, description, ...otherProps } : CardProps) => {
 const TeamSection = () => {
 
     return (
-        <section id="team" style={{padding:'5%', background:'#dddddd'}}>
+        <section id="team" style={{padding:'5%', background:'#0004'}}>
             <div style={{marginBottom:'1em', textAlign:'center'}}>
-                <h1 style={{color:"#3f3f3f"}}>Team</h1>
+                <h1 style={{color:"#fff"}}>Team</h1>
             </div>
             <div style={{alignItems:'center', padding:'1em'}}>
                 <Card.Group itemsPerRow={useMediaQuery({maxWidth:700}) ? 2 : 5}>

@@ -8,7 +8,7 @@ function Main() {
   return (
     <div className="App">
       <Header id="header" />
-      <Body style={{minHeight:'75vh'}} />
+      <Body id="particle-bg" style={{minHeight:'75vh', background:'#000', color: '#fff'}} />
       <Footer />
     </div>
   );
