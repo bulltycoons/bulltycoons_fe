@@ -1,5 +1,4 @@
 import { ChainId, Config as DapConfig } from "@usedapp/core";
-import assert from "assert";
 
 const {
     REACT_APP_CHAIN_ID,
@@ -8,7 +7,7 @@ const {
     REACT_APP_ENV_BASE,
     REACT_APP_OPENSEA_URL,
     REACT_APP_SMART_CONTRACT_EXPLORER_BASE_URL,
-    REACT_APP_START_DATE
+    REACT_APP_METADATA_BASE_URL
 } = process.env;
 
 const devConfig:DapConfig = {
@@ -43,7 +42,8 @@ const Config = {
     devConfig,
     testnetConfig,
     mainnetConfig,
-    rpcConfig
+    rpcConfig,
+    API_BASE_URI: REACT_APP_METADATA_BASE_URL
 }
 
 export default Config;

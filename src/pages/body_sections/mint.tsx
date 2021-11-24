@@ -118,7 +118,7 @@ const MintSection = () => {
     }, [mintStartDate]);
 
     return (
-        <section id="mint" style={{padding:'5%', background:'#000', color:'#ffffff'}}>
+        <section id="mint" style={{padding:'5%', background:'#000000', color:'#ffffff'}}>
             <div style={{flexDirection:useMediaQuery({maxWidth:600}) ? 'column' : 'row', display:'flex', alignItems:'center'}}>
                 <div style={{flex:2, textAlign:'left', padding:'1em'}}>
                     <h2 style={{color:"#fff"}}>Mint Your BullTycoons</h2>
