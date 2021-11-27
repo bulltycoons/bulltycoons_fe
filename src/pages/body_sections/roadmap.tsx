@@ -18,21 +18,18 @@ const RoadmapSection = () => {
 
     const [ roadMap, setRoadMap ] = useState<RoadmapInterface[]>();
     const [ isLoading, setLoading ] = useState(true);
-    const [ retries, setRetries ] = useState(0);
 
-    const getRoadmap = async () => {
+    const getRoadmap = async (retries=0) => {
         if (!Config.API_BASE_URI) return;
         if (retries >= 3) return; // just abort if retries is more than expected
         await axios.get(`${Config.API_BASE_URI}/roadmap`)
         .then(response => {
             setRoadMap(response.data);
             setLoading(false);
-            setRetries(0); // reset it.
         })
         .catch(e => {
             Logger.log(e, "<== Error fetching roadmap");
-            setRetries(retries + 1);
-            getRoadmap();
+            getRoadmap(retries + 1);
         });
     }
 
@@ -60,7 +57,7 @@ const RoadmapSection = () => {
                                     <div style={{textAlign:'left', padding:'1em'}}>
                                     {(Object.values(mapItem.todos).map((itemList, i) => {
                                         return (
-                                            <div style={{flexDirection:'row', display:'flex', padding:'.5em'}}>
+                                            <div key={`${i}`} style={{flexDirection:'row', display:'flex', padding:'.5em'}}>
                                                 {itemList.completed ? <Icon name="check" color="green" /> : <Icon name="minus" style={{color:`${mapItem.color}aa`}} />}
                                                 <Card.Description style={{flex:1, marginLeft:'1em', fontSize:'medium'}}>{itemList.contents}</Card.Description>
                                             </div>
