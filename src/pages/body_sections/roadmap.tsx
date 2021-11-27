@@ -1,81 +1,57 @@
-// import React from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Icon } from 'semantic-ui-react';
+import Config from '../../utils/config';
+import axios from 'axios';
+import Logger from '../../utils/logger';
 
-const roadMapContent = [
-    {
-        title: "Q3 2021",
-        todos: [
-            {
-                contents: "Initial idea generation about the BullTycoons NFT",
-                completed: true
-            },
-            {
-                contents: "Team building and art designs",
-                completed: true
-            },
-        ],
-        bg: "#232323"/* "#800324" */,
-        color: "#ffffff"
-        
-    },
-    {
-        title: "Q4 2021",
-        todos: [
-            {
-                contents: "Smart contract and website development",
-                completed: true
-            },
-            {
-                contents: "Gleam competition to reward pioneering community members",
-                completed: false
-            },
-            {
-                contents: "Smart contract deployment to the Polygon network (to reduce gas fees) and website launch",
-                completed: false
-            },
-            {
-                contents: "First edition minting of the BullTycoons NFT & airdrop to the winners of the gleam competition",
-                completed: false
-            },
-            {
-                contents: "Opensea Integration",
-                completed: false
-            },
-        ],
-        bg: "#232323",
-        color: "#ffffff"
-    },
-    {
-        title: "Q1 2022",
-        todos: [
-            {
-                contents: "Bull Fight Club Game development to reward BullTycoons NFT holders",
-                completed: false
-            },
-            {
-                contents: "Test release of the game to the community",
-                completed: false
-            },
-            {
-                contents: "Expansion of the BullTycoons community",
-                completed: false
-            }
-        ],
-        bg: "#232323"/* "#0acaf3" */,
-        color:"#ffffff"
-    }
-]
+interface RoadmapInterface {
+    title: string;
+    todos: {
+        contents: string;
+        completed: boolean;
+    }[],
+    bg?: string;
+    color?: string;
+}
 
 const RoadmapSection = () => {
 
-    return (
+    const [ roadMap, setRoadMap ] = useState<RoadmapInterface[]>();
+    const [ isLoading, setLoading ] = useState(true);
+    const [ retries, setRetries ] = useState(0);
+
+    const getRoadmap = async () => {
+        if (!Config.API_BASE_URI) return;
+        if (retries >= 3) return; // just abort if retries is more than expected
+        await axios.get(`${Config.API_BASE_URI}/roadmap`)
+        .then(response => {
+            setRoadMap(response.data);
+            setLoading(false);
+            setRetries(0); // reset it.
+        })
+        .catch(e => {
+            Logger.log(e, "<== Error fetching roadmap");
+            setRetries(retries + 1);
+            getRoadmap();
+        });
+    }
+
+    useEffect(() => {
+        getRoadmap();
+
+        return () => {
+            // clear all clearables here
+        }
+    }, []);
+
+    return (!isLoading && roadMap) ? (
         <section id="roadmap" style={{padding:'5%', background:'#0004'}}>
             <div style={{marginBottom:'1em', textAlign:'center'}}>
                 <h1 style={{color:"#fff"}}>Roadmap</h1>
             </div>
             <div style={{padding:'1em'}}>
                 <Card.Group /* itemsPerRow={2} */ flex>
-                    {(Object.values(roadMapContent).map((mapItem, index) => {
+                    {(Object.values(roadMap).map((mapItem, index) => {
                         return (
                             <Card fluid style={{background:mapItem.bg, color:mapItem.color}}>
                                 <Card.Content>
@@ -98,7 +74,7 @@ const RoadmapSection = () => {
                 </Card.Group>
             </div>
         </section>
-    )
+    ) : null;
 }
 
 export default RoadmapSection;
