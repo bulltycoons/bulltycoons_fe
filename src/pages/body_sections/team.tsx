@@ -6,9 +6,9 @@ import axios from 'axios';
 import Logger from '../../utils/logger';
 
 interface CardProps {
-    image: String;
-    name: String;
-    description: String;
+    image: string;
+    name: string;
+    description: string;
     style?: CSSProperties;
 }
 
@@ -27,7 +27,6 @@ const CardItem = ({ image, name, description, ...otherProps } : CardProps) => {
 }
 
 interface TeamResponseInterface {
-    baseImageURI: string;
     teamMetadata: {
         tokenId: number | string,
         name: string,
@@ -39,28 +38,26 @@ const TeamSection = () => {
 
     const [ teamResponse, setTeamResponse ] = useState<TeamResponseInterface>();
     const [ isLoading, setLoading ] = useState(true);
-    const [ retries, setRetries ] = useState(0);
 
     const isSmallScreen = useMediaQuery({maxWidth:700});
 
-    const getRoadmap = async () => {
+    const getTeam = (retries=0) => {
         if (!Config.API_BASE_URI) return;
         if (retries >= 3) return; // just abort if retries is more than expected
-        await axios.get(`${Config.API_BASE_URI}/team`)
-        .then(response => {
-            setTeamResponse(response.data);
+        axios.get(`${Config.API_BASE_URI}/team`)
+        .then(async (response) => {
+            const data:TeamResponseInterface = response.data;
+            setTeamResponse(data);
             setLoading(false);
-            setRetries(0); // reset it.
         })
         .catch(e => {
             Logger.log(e, "<== Error fetching team");
-            setRetries(retries + 1);
-            getRoadmap();
+            getTeam(retries + 1);
         });
     }
 
     useEffect(() => {
-        getRoadmap();
+        getTeam();
 
         return () => {
             // clear all clearables here
@@ -76,7 +73,7 @@ const TeamSection = () => {
                 <Card.Group itemsPerRow={isSmallScreen ? 2 : 5}>
                     {Object.values(teamResponse.teamMetadata).map((val,index) => {
                         return (
-                            <CardItem key={`${index}`} image={`${teamResponse.baseImageURI}/${val.tokenId}.png`} name={val.name} description={val.role} style={{margin:'.5em'}} />
+                            <CardItem key={`${index}`} image={`${Config.API_BASE_URI}/image/${val.tokenId}`} name={val.name} description={val.role} style={{margin:'.5em'}} />
                         );
                     })}
                 </Card.Group>
