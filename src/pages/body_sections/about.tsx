@@ -14,7 +14,7 @@ const AboutSection = () => {
 
     useEffect(() => {
         if (!Config.API_BASE_URI) return;
-        axios.get(`${Config.API_BASE_URI}/${tokenId}`)
+        axios.get(`${Config.API_BASE_URI}/api/${tokenId}`)
         .then(response => {
             setImgUrl(response.data.image);
             setImgLoading(false);
