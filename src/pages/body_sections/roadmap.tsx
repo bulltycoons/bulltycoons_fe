@@ -50,7 +50,7 @@ const RoadmapSection = () => {
                 <Card.Group /* itemsPerRow={2} */ flex>
                     {(Object.values(roadMap).map((mapItem, index) => {
                         return (
-                            <Card fluid style={{background:mapItem.bg, color:mapItem.color}}>
+                            <Card key={index} fluid style={{background:mapItem.bg, color:mapItem.color}}>
                                 <Card.Content>
                                     <Card.Header style={{color:mapItem.color}}>{mapItem.title}</Card.Header>
                                     <div style={{height:'.5px', background:`${mapItem.color}55`, marginTop:'1em'}} />
