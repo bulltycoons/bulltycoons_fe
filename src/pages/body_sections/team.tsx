@@ -45,7 +45,7 @@ const TeamSection = () => {
         if (!Config.API_BASE_URI) return;
         if (retries >= 3) return; // just abort if retries is more than expected
         axios.get(`${Config.API_BASE_URI}/team`)
-        .then(async (response) => {
+        .then((response) => {
             const data:TeamResponseInterface = response.data;
             setTeamResponse(data);
             setLoading(false);
@@ -73,7 +73,7 @@ const TeamSection = () => {
                 <Card.Group itemsPerRow={isSmallScreen ? 2 : 5}>
                     {Object.values(teamResponse.teamMetadata).map((val,index) => {
                         return (
-                            <CardItem key={`${index}`} image={`${Config.API_BASE_URI}/image/${val.tokenId}`} name={val.name} description={val.role} style={{margin:'.5em'}} />
+                            <CardItem key={`${index}`} image={`/assets/team/${val.tokenId}.png`} name={val.name} description={val.role} style={{margin:'.5em'}} />
                         );
                     })}
                 </Card.Group>
