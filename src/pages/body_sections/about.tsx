@@ -31,11 +31,9 @@ const AboutSection = () => {
         <section id="about" style={{padding:'1em'}}>
             <div style={{flexDirection:useMediaQuery({maxWidth:600}) ? 'column' : 'row', display:'flex', alignItems:'center'}}>
                 <div style={{flex:2, textAlign:'left', padding:'4em'}}>
-                    <h2>About BullTycoons</h2>
-                    <p style={{textAlign:'justify', fontSize:'1.3rem'}}>
-                        BullTycoons is a layered NFT project randomly generated, having distinct properties to form a genus with each property depicting a particular Tycoon. 
-                        <br />
-                        The NFT project is community based, with the aim of empowering the community through animated series and gamified technology.
+                    <h1>About BullTycoons</h1>
+                    <p style={{textAlign:'justify', fontSize:'1.5rem'}}>
+                        BullTycoons is a collection of 5555 unique hand-drawn NFTs on the Polygon network, actively building a play-to-earn metaverse game.
                     </p>
                     <p style={{textAlign:'justify', fontSize:'1.3rem'}}>
                         <span style={{marginBottom:'0.5em'}}>Join our community</span>

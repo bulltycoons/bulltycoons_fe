@@ -17,7 +17,7 @@ const Header = ({ ...otherProps}) => {
             <nav className="navbar" style={{flexDirection:'row', display:'flex', alignItems:'center'}}>
                 <div className="siteName" style={{flexDirection:'row',display:'flex',alignItems:'center', marginLeft:'1em', marginRight:'1em'}}>
                     <span style={{marginRight:'-0.5em', color:'#fff', fontSize:'2em'}}>Bull</span>
-                    <Image style={{width:'4.5em',height:'4.5em'}} src='/assets/14.png' circular />
+                    <Image style={{width:'4.5em',height:'4.5em'}} src='/assets/header.png' circular />
                     <span style={{color:'#fff', fontSize:'2em', marginLeft:'-0.5em'}}>Tycoons</span>
                 </div>
                 {!useMediaQuery({maxWidth: 600}) && (<div style={{flex:1}}>
